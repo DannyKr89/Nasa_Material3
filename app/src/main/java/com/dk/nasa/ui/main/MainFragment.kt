@@ -1,13 +1,18 @@
 package com.dk.nasa.ui.main
 
-import androidx.lifecycle.ViewModelProvider
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dk.nasa.R
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import coil.load
 import com.dk.nasa.databinding.FragmentMainBinding
+import com.dk.nasa.model.PictureOfTheDayData
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class MainFragment : Fragment() {
 
@@ -15,14 +20,13 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
-    private var _binding :FragmentMainBinding? = null
+    private val viewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+    private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-    }
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +34,58 @@ class MainFragment : Fragment() {
     ): View {
         _binding = FragmentMainBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.sendRequest()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getLiveData().observe(viewLifecycleOwner) { appState ->
+            when (appState) {
+                is AppState.Error -> {
+
+                }
+                AppState.Loading -> {
+
+                }
+                is AppState.Success -> {
+                    renderData(appState.pictureOfTheDayData)
+                }
+            }
+        }
+
+        binding.inputLayout.setEndIconOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW).apply {
+                data =
+                    Uri.parse("https://en.wikipedia.org/wiki/${binding.inputET.text.toString()}")
+            })
+        }
+
+        setBottomSheetBehavior(binding.bottomSheet.bottomSheetContainer)
+    }
+
+    private fun renderData(pictureOfTheDayData: PictureOfTheDayData) {
+        with(binding) {
+            pictureOfTheDay.load(pictureOfTheDayData.url)
+            bottomSheet.bottomSheetDescriptionHeader.text = pictureOfTheDayData.title
+            bottomSheet.bottomSheetDescription.text = pictureOfTheDayData.explanation
+
+        }
+    }
+
+    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
+    }
+
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
 }
