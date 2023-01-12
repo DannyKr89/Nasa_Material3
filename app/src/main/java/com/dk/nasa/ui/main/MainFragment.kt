@@ -91,12 +91,23 @@ class MainFragment : Fragment() {
 
     private fun renderData(pictureOfTheDayData: PictureOfTheDayData) {
         with(binding) {
-            pictureOfTheDay.load(pictureOfTheDayData.url)
+            chipHD.setOnCheckedChangeListener { _, b ->
+                setHD(b, pictureOfTheDayData)
+            }
+            setHD(chipHD.isChecked, pictureOfTheDayData)
             bottomSheet.bottomSheetDescriptionHeader.text = pictureOfTheDayData.title
             bottomSheet.bottomSheetDescription.text = pictureOfTheDayData.explanation
 
         }
     }
+
+        private fun setHD(isHD: Boolean, pictureOfTheDayData: PictureOfTheDayData){
+            if (isHD) {
+                binding.pictureOfTheDay.load(pictureOfTheDayData.hdurl)
+            } else {
+                binding.pictureOfTheDay.load(pictureOfTheDayData.url)
+            }
+        }
 
     private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
