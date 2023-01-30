@@ -14,6 +14,11 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="MyShapeAppearance" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize" >50%</item>
+    </style>
+
     <style name="MyTextAppearance" parent="TextAppearance.Material3.LabelLarge">
         <item name="fontFamily">@font/artifika</item>
         <item name="android:fontFamily">@font/artifika</item>
@@ -39,6 +44,7 @@
 
     <style name="MyChips" parent="Widget.Material3.Chip.Suggestion">
         <item name="android:textAppearance">@style/MyTextAppearance</item>
+        /<item name="shapeAppearance">@style/MyShapeAppearance</item>
     </style>
 
 

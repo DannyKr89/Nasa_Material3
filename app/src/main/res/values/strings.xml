@@ -9,4 +9,5 @@
     <string name="today">Сегодня</string>
     <string name="yesterday">Вчера</string>
     <string name="after_yesterday">Позавчера</string>
+    <string name="hd">HD</string>
 </resources>

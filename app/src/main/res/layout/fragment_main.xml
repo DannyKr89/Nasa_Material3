@@ -13,7 +13,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/search_wiki"
@@ -80,10 +80,11 @@
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipHD"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            style="@style/Widget.Material3.Chip.Suggestion.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HD"
+            android:layout_margin="4dp"
+            android:text="@string/hd"
             app:layout_constraintBottom_toBottomOf="@id/pictureOfTheDay"
             app:layout_constraintEnd_toEndOf="@id/pictureOfTheDay" />
 
