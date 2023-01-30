@@ -12,7 +12,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="textAppearanceBody2">@style/MyTextAppearance</item>
     </style>
 
     <style name="MyTextAppearance" parent="TextAppearance.Material3.LabelLarge">
@@ -20,7 +19,7 @@
         <item name="android:fontFamily">@font/artifika</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">10sp</item>
-        <item name="android:letterSpacing">0.714286</item>
+        <item name="android:letterSpacing">0.5</item>
         <item name="android:textAllCaps">true</item>
 
     </style>
@@ -35,6 +34,11 @@
         <item name="colorPrimary">#EEBA00</item>
         <item name="colorPrimaryVariant">#B38000</item>
         <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+
+    <style name="MyChips" parent="Widget.Material3.Chip.Suggestion">
+        <item name="android:textAppearance">@style/MyTextAppearance</item>
     </style>
 
 
