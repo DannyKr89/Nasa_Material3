@@ -10,4 +10,9 @@
     <string name="yesterday">Вчера</string>
     <string name="after_yesterday">Позавчера</string>
     <string name="hd">HD</string>
+    <string name="defaultTheme">Default</string>
+    <string name="red">Red</string>
+    <string name="yellow">Yellow</string>
+    <string name="btn_apply">Применить</string>
+    <string name="theme">Тема</string>
 </resources>

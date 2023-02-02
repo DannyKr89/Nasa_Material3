@@ -20,9 +20,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 @RequiresApi(Build.VERSION_CODES.O)
 class MainFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
 
     private val viewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)

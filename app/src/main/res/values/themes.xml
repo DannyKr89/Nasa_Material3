@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.Nasa" parent="Theme.Material3.DynamicColors.DayNight">
+    <style name="Theme.Nasa" parent="Theme.Material3.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -29,13 +29,13 @@
 
     </style>
 
-    <style name="Red" parent="Theme.Material3.DayNight">
+    <style name="Red" parent="Theme.Nasa">
         <item name="colorPrimary">#EE0000</item>
         <item name="colorPrimaryVariant">#B30015</item>
         <item name="colorOnPrimary">@color/white</item>
     </style>
 
-    <style name="Yellow" parent="Theme.Material3.DayNight">
+    <style name="Yellow" parent="Theme.Nasa">
         <item name="colorPrimary">#EEBA00</item>
         <item name="colorPrimaryVariant">#B38000</item>
         <item name="colorOnPrimary">@color/white</item>
