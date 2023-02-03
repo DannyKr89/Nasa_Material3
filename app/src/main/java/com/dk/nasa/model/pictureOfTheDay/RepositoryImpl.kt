@@ -1,4 +1,4 @@
-package com.dk.nasa.model
+package com.dk.nasa.model.pictureOfTheDay
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,7 +12,7 @@ class RepositoryImpl {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    fun getPictureOfTheDayApi(): PictureOfTheDayAPI{
+    fun getPictureOfTheDayApi(): PictureOfTheDayAPI {
         return retrofit.create(PictureOfTheDayAPI::class.java)
     }
 }

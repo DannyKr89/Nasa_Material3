@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.dk.nasa.R
 import com.dk.nasa.databinding.FragmentMainBinding
-import com.dk.nasa.model.PictureOfTheDayData
+import com.dk.nasa.model.pictureOfTheDay.PictureOfTheDayData
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 @RequiresApi(Build.VERSION_CODES.O)
