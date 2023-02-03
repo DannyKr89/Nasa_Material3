@@ -42,14 +42,15 @@ class EarthFragment : Fragment() {
         }
     }
 
-    private fun renderData(it: EpicData) {
+    private fun renderData(epicData: EpicData) {
         with(binding){
-            val year = it.first().date.substring(0,4)
-            val month = it.first().date.substring(5,7)
-            val day = it.first().date.substring(8,10)
-            imEarth.load("https://epic.gsfc.nasa.gov/archive/natural/$year/$month/$day/png/${it.first().image}.png")
-            tvDescription.text = it.first().caption
-            tvDate.text = it.first().date
+            val year = epicData.first().date.substring(0,4)
+            val month = epicData.first().date.substring(5,7)
+            val day = epicData.first().date.substring(8,10)
+            imEarth.load("https://epic.gsfc.nasa.gov/archive/natural/$year/$month/$day/png/${epicData.first().image}.png")
+            println(epicData.size)
+            tvDescription.text = epicData.first().caption
+            tvDate.text = epicData.first().date
         }
     }
 

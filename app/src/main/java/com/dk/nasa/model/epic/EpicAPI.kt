@@ -8,7 +8,6 @@ interface EpicAPI {
 
     @GET("api/natural")
     fun getEpicData(
-        @Query("date") date: String,
         @Query("api_key") apiKey: String
     ): Call<EpicData>
 }

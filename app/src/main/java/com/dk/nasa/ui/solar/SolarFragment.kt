@@ -32,16 +32,17 @@ class SolarFragment : Fragment() {
             vpSolar.adapter = VPAdapter(this@SolarFragment.requireActivity())
             TabLayoutMediator(tlSolar,vpSolar) { tab, position ->
                 vpSolar.setCurrentItem(tab.position, true)
-                when(position){
+                tab.text = when(position){
                     0 ->{
-                        tab.text = getString(R.string.earth)
+                         getString(R.string.earth)
                     }
                     1 ->{
-                        tab.text = getString(R.string.mars)
+                        getString(R.string.mars)
                     }
                     2 ->{
-                        tab.text = getString(R.string.weather)
+                        getString(R.string.weather)
                     }
+                    else -> {""}
                 }
             }.attach()
         }

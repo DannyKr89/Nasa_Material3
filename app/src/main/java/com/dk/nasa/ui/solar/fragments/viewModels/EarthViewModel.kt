@@ -11,7 +11,6 @@ import com.dk.nasa.model.epic.EpicRepositoryImpl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 class EarthViewModel(
@@ -19,20 +18,10 @@ class EarthViewModel(
     private val repositoryImpl: EpicRepositoryImpl = EpicRepositoryImpl()
 ) : ViewModel() {
 
-    var date: String
-
-    init {
-        date = LocalDate.now().toString()
-    }
-
-    fun setDate(days: Long) {
-        date = LocalDate.now().minusDays(days).toString()
-    }
-
     fun getLiveData() = liveData
 
     fun sendRequest() {
-        repositoryImpl.getEpicApi().getEpicData(date, BuildConfig.NASA_API_KEY)
+        repositoryImpl.getEpicApi().getEpicData(BuildConfig.NASA_API_KEY)
             .enqueue(object : Callback<EpicData> {
                 @SuppressLint("NullSafeMutableLiveData")
                 override fun onResponse(
