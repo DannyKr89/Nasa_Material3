@@ -21,7 +21,10 @@
         app:navGraph="@navigation/navigation" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        style="@style/Widget.Material3.BottomNavigationView"
         android:id="@+id/navView"
+        app:itemTextColor="?navTextColor"
+        app:itemIconTint="?bottomSheetColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:menu="@menu/nav_menu"

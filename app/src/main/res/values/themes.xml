@@ -5,12 +5,9 @@
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="bottomSheetColor">#FFB584</item>
+        <item name="navTextColor">@color/purple_500</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -33,12 +30,16 @@
         <item name="colorPrimary">#EE0000</item>
         <item name="colorPrimaryVariant">#B30015</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="bottomSheetColor">#9BFF84</item>
+        <item name="navTextColor">#EE0000</item>
     </style>
 
     <style name="Yellow" parent="Theme.Nasa">
         <item name="colorPrimary">#EEBA00</item>
         <item name="colorPrimaryVariant">#B38000</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="bottomSheetColor">#84A7FF</item>
+        <item name="navTextColor">#EEBA00</item>
     </style>
 
 
@@ -47,5 +48,8 @@
         /<item name="shapeAppearance">@style/MyShapeAppearance</item>
     </style>
 
+    <style name="MyBottomSheet" parent="Widget.Material3.BottomSheet">
+        <item name="backgroundTint">?bottomSheetColor</item>
+    </style>
 
 </resources>
