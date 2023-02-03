@@ -14,4 +14,9 @@
         android:name="com.dk.nasa.ui.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/solarFragment"
+        android:name="com.dk.nasa.ui.solar.SolarFragment"
+        android:label="fragment_solar"
+        tools:layout="@layout/fragment_solar" />
 </navigation>

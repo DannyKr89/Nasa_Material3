@@ -77,12 +77,12 @@ class MainFragment : Fragment() {
             }
         }
 
-//        binding.inputLayout.setEndIconOnClickListener {
-//            startActivity(Intent(Intent.ACTION_VIEW).apply {
-//                data =
-//                    Uri.parse("https://en.wikipedia.org/wiki/${binding.inputET.text.toString()}")
-//            })
-//        }
+        binding.inputLayout.setEndIconOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW).apply {
+                data =
+                    Uri.parse("https://en.wikipedia.org/wiki/${binding.inputET.text.toString()}")
+            })
+        }
 
         setBottomSheetBehavior(binding.bottomSheet.bottomSheetContainer)
     }
