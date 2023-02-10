@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface MarsRoverAPI {
     @GET("mars-photos/api/v1/rovers/curiosity/photos?")
     fun getMarsRoverData(
-        @Query("earth_date") date: String,
+        @Query("earth_date") earthDate: String,
         @Query("api_key") apiKey: String
     ): Call<MarsData>
 }

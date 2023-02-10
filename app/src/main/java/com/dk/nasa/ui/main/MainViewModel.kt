@@ -32,14 +32,14 @@ class MainViewModel(
 
     fun sendRequest() {
         liveData.value = AppState.Loading
-        repositoryImpl.getPictureOfTheDayApi().getPictureOfTheDay(date,BuildConfig.NASA_API_KEY)
+        repositoryImpl.getPictureOfTheDayApi().getPictureOfTheDay(date, BuildConfig.NASA_API_KEY)
             .enqueue(object : Callback<PictureOfTheDayData> {
                 override fun onResponse(
                     call: Call<PictureOfTheDayData>,
                     response: Response<PictureOfTheDayData>
                 ) {
                     val pictureOfTheDayData = response.body()
-                    if (response.isSuccessful && pictureOfTheDayData != null){
+                    if (response.isSuccessful && pictureOfTheDayData != null) {
                         liveData.postValue(AppState.Success(pictureOfTheDayData))
                     } else {
                         liveData.postValue(AppState.Error(response.errorBody().toString()))

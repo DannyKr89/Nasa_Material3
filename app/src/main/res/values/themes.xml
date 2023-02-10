@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.Nasa" parent="Theme.Material3.DayNight">
+    <style name="Theme.Nasa" parent="Theme.Material3.DynamicColors.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -13,7 +13,7 @@
 
     <style name="MyShapeAppearance" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerFamily">cut</item>
-        <item name="cornerSize" >50%</item>
+        <item name="cornerSize">50%</item>
     </style>
 
     <style name="MyTextAppearance" parent="TextAppearance.Material3.LabelLarge">
@@ -45,7 +45,7 @@
 
     <style name="MyChips" parent="Widget.Material3.Chip.Suggestion">
         <item name="android:textAppearance">@style/MyTextAppearance</item>
-        /<item name="shapeAppearance">@style/MyShapeAppearance</item>
+        <item name="shapeAppearance">@style/MyShapeAppearance</item>
     </style>
 
     <style name="MyBottomSheet" parent="Widget.Material3.BottomSheet">

@@ -8,14 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.dk.nasa.R
 import com.dk.nasa.databinding.FragmentMainBinding
 import com.dk.nasa.model.pictureOfTheDay.PictureOfTheDayData
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MainFragment : Fragment() {
@@ -26,8 +24,6 @@ class MainFragment : Fragment() {
     }
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,8 +79,6 @@ class MainFragment : Fragment() {
                     Uri.parse("https://en.wikipedia.org/wiki/${binding.inputET.text.toString()}")
             })
         }
-
-        setBottomSheetBehavior(binding.bottomSheet.bottomSheetContainer)
     }
 
     private fun showProgressbar() {
@@ -111,20 +105,13 @@ class MainFragment : Fragment() {
         }
     }
 
-        private fun setHD(isHD: Boolean, pictureOfTheDayData: PictureOfTheDayData){
-            if (isHD) {
-                binding.pictureOfTheDay.load(pictureOfTheDayData.hdurl)
-            } else {
-                binding.pictureOfTheDay.load(pictureOfTheDayData.url)
-            }
+    private fun setHD(isHD: Boolean, pictureOfTheDayData: PictureOfTheDayData) {
+        if (isHD) {
+            binding.pictureOfTheDay.load(pictureOfTheDayData.hdurl)
+        } else {
+            binding.pictureOfTheDay.load(pictureOfTheDayData.url)
         }
-
-    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-
     }
-
 
     override fun onDestroyView() {
         _binding = null
