@@ -92,16 +92,6 @@
             app:layout_constraintBottom_toBottomOf="@id/pictureOfTheDay"
             app:layout_constraintEnd_toEndOf="@id/pictureOfTheDay" />
 
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/pictureOfTheDay"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/pictureOfTheDay" />
 
         <TextView
             android:id="@+id/title"
@@ -120,6 +110,14 @@
             app:layout_constraintTop_toBottomOf="@id/title" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
     <include
         android:id="@+id/bottomSheet"
