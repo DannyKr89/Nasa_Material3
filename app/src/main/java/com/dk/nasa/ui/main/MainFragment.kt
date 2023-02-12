@@ -1,15 +1,15 @@
 package com.dk.nasa.ui.main
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.transition.ChangeImageTransform
-import android.transition.TransitionManager
-import android.transition.TransitionSet
+import android.transition.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -48,21 +48,58 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.pictureOfTheDay.setOnClickListener {
+        zoomImage()
 
-            val changeImageTransform = ChangeImageTransform()
-            val transitionSet = TransitionSet().apply {
-                addTransition(changeImageTransform)
-            }
-            TransitionManager.beginDelayedTransition(binding.root, transitionSet)
-            if (flag) {
-                (it as ImageView).scaleType = ImageView.ScaleType.CENTER_CROP
-            } else {
-                (it as ImageView).scaleType = ImageView.ScaleType.CENTER_INSIDE
-            }
-            flag = !flag
+        changeDay()
+
+        initBehavior()
+
+        initViewModel()
+
+        searchInWiki()
+    }
+
+    private fun searchInWiki() {
+        binding.inputLayout.setEndIconOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse("https://en.wikipedia.org/wiki/${binding.inputET.text.toString()}")
+            })
         }
+    }
 
+    private fun initViewModel() {
+        viewModel.getLiveData().observe(viewLifecycleOwner) { appState ->
+            when (appState) {
+                is AppState.Error -> {
+                    hideProgressbar()
+                }
+                AppState.Loading -> {
+                    showProgressbar()
+                }
+                is AppState.Success -> {
+                    hideProgressbar()
+                    renderData(appState.pictureOfTheDayData)
+                }
+            }
+        }
+    }
+
+    private fun initBehavior() {
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.bottomSheetContainer)
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+            }
+
+            @RequiresApi(Build.VERSION_CODES.Q)
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                binding.pictureOfTheDay.transitionAlpha = 1 - slideOffset
+            }
+
+        })
+    }
+
+    private fun changeDay() {
         binding.chipGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
                 R.id.chipToday -> {
@@ -79,39 +116,22 @@ class MainFragment : Fragment() {
                 }
             }
         }
+    }
 
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet.bottomSheetContainer)
-        bottomSheetBehavior.addBottomSheetCallback(object :
-            BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
+    private fun zoomImage() {
+        binding.pictureOfTheDay.setOnClickListener {
+
+            val changeImageTransform = ChangeImageTransform()
+            val transitionSet = TransitionSet().apply {
+                addTransition(changeImageTransform)
             }
-
-            @RequiresApi(Build.VERSION_CODES.Q)
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                binding.pictureOfTheDay.transitionAlpha = 1 - slideOffset
+            TransitionManager.beginDelayedTransition(binding.root, transitionSet)
+            if (flag) {
+                (it as ImageView).scaleType = ImageView.ScaleType.CENTER_CROP
+            } else {
+                (it as ImageView).scaleType = ImageView.ScaleType.CENTER_INSIDE
             }
-
-        })
-
-        viewModel.getLiveData().observe(viewLifecycleOwner) { appState ->
-            when (appState) {
-                is AppState.Error -> {
-                    hideProgressbar()
-                }
-                AppState.Loading -> {
-                    showProgressbar()
-                }
-                is AppState.Success -> {
-                    hideProgressbar()
-                    renderData(appState.pictureOfTheDayData)
-                }
-            }
-        }
-
-        binding.inputLayout.setEndIconOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("https://en.wikipedia.org/wiki/${binding.inputET.text.toString()}")
-            })
+            flag = !flag
         }
     }
 
@@ -130,10 +150,18 @@ class MainFragment : Fragment() {
     private fun renderData(pictureOfTheDayData: PictureOfTheDayData) {
         with(binding) {
             chipHD.setOnCheckedChangeListener { _, b ->
-                TransitionManager.beginDelayedTransition(root)
+                val changeBounds = ChangeBounds().apply {
+                    duration = 1000
+                    interpolator = AnticipateOvershootInterpolator(1f)
+                    pathMotion = ArcMotion().apply {
+                        minimumHorizontalAngle = 90f
+                        maximumAngle = 90f
+                    }
+                }
+                TransitionManager.beginDelayedTransition(root, changeBounds)
                 setHD(b, pictureOfTheDayData)
             }
-            setHD(chipHD.isChecked, pictureOfTheDayData)
+            pictureOfTheDay.load(pictureOfTheDayData.url)
             bottomSheet.bottomSheetDescriptionHeader.text = pictureOfTheDayData.title
             bottomSheet.bottomSheetDescription.text = pictureOfTheDayData.explanation
 
@@ -141,19 +169,33 @@ class MainFragment : Fragment() {
     }
 
     private fun setHD(isHD: Boolean, pictureOfTheDayData: PictureOfTheDayData) {
+
+        val params = binding.chipHD.layoutParams as ConstraintLayout.LayoutParams
         if (isHD) {
             with(binding) {
                 chipHD.text = getString(R.string.hd)
+                params.horizontalBias = 0.95f
+                ObjectAnimator.ofFloat(chipHD, View.ROTATION, 0f, 360f).apply {
+                    duration = 500
+                    startDelay = 200
+                    start()
+                }
                 pictureOfTheDay.load(pictureOfTheDayData.hdurl)
             }
 
         } else {
             with(binding) {
                 chipHD.text = getString(R.string.sd)
+                params.horizontalBias = 0.05f
+                ObjectAnimator.ofFloat(chipHD, View.ROTATION, 360f, 0f).apply {
+                    duration = 500
+                    startDelay = 200
+                    start()
+                }
                 pictureOfTheDay.load(pictureOfTheDayData.url)
             }
-
         }
+        binding.chipHD.layoutParams = params
     }
 
     override fun onDestroyView() {

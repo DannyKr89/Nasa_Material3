@@ -13,12 +13,11 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.main.MainFragment"
-        app:layoutDescription="@xml/fragment_main_scene">
+        tools:context=".ui.main.MainFragment">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayout"
@@ -96,9 +95,11 @@
             style="@style/Widget.Material3.Chip.Suggestion.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hd"
-            app:layout_constraintBottom_toBottomOf="@id/pictureOfTheDay"
-            app:layout_constraintEnd_toEndOf="@id/pictureOfTheDay" />
+            android:text="@string/sd"
+            app:layout_constraintTop_toTopOf="@id/pictureOfTheDay"
+            app:layout_constraintEnd_toEndOf="@id/pictureOfTheDay"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toStartOf="@id/pictureOfTheDay" />
 
 
         <TextView
@@ -117,7 +118,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <include
