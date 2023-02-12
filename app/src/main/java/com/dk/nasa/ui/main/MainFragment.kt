@@ -107,9 +107,17 @@ class MainFragment : Fragment() {
 
     private fun setHD(isHD: Boolean, pictureOfTheDayData: PictureOfTheDayData) {
         if (isHD) {
-            binding.pictureOfTheDay.load(pictureOfTheDayData.hdurl)
+            with(binding){
+                chipHD.text = getString(R.string.hd)
+                pictureOfTheDay.load(pictureOfTheDayData.hdurl)
+            }
+
         } else {
-            binding.pictureOfTheDay.load(pictureOfTheDayData.url)
+            with(binding){
+                chipHD.text = getString(R.string.sd)
+                pictureOfTheDay.load(pictureOfTheDayData.url)
+            }
+
         }
     }
 
