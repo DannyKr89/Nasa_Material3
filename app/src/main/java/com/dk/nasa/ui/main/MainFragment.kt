@@ -4,9 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.transition.ChangeImageTransform
+import android.transition.TransitionManager
+import android.transition.TransitionSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -25,6 +29,7 @@ class MainFragment : Fragment() {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
     private var _binding: FragmentMainBinding? = null
+    private var flag = false
     private val binding get() = _binding!!
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
@@ -42,6 +47,21 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.pictureOfTheDay.setOnClickListener {
+
+            val changeImageTransform = ChangeImageTransform()
+            val transitionSet = TransitionSet().apply {
+                addTransition(changeImageTransform)
+            }
+            TransitionManager.beginDelayedTransition(binding.root, transitionSet)
+            if (flag) {
+                (it as ImageView).scaleType = ImageView.ScaleType.CENTER_CROP
+            } else {
+                (it as ImageView).scaleType = ImageView.ScaleType.CENTER_INSIDE
+            }
+            flag = !flag
+        }
 
         binding.chipGroup.setOnCheckedStateChangeListener { group, _ ->
             when (group.checkedChipId) {
@@ -110,6 +130,7 @@ class MainFragment : Fragment() {
     private fun renderData(pictureOfTheDayData: PictureOfTheDayData) {
         with(binding) {
             chipHD.setOnCheckedChangeListener { _, b ->
+                TransitionManager.beginDelayedTransition(root)
                 setHD(b, pictureOfTheDayData)
             }
             setHD(chipHD.isChecked, pictureOfTheDayData)
