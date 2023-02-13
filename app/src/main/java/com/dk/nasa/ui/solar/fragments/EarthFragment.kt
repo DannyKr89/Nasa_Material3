@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.dk.nasa.databinding.FragmentEarthBinding
-import com.dk.nasa.model.epic.EpicData
 import com.dk.nasa.model.photos.Photos
 import com.dk.nasa.ui.solar.fragments.viewModels.EarthViewModel
 
@@ -44,32 +45,37 @@ class EarthFragment : Fragment() {
         }
     }
 
-    private fun renderData(epicData: EpicData) {
-        val list = convertToPhotos(epicData)
-        adapter.submitList(list)
+    private fun renderData(epicData: MutableList<Photos>) {
+        adapter.submitList(epicData)
         binding.earthRV.adapter = adapter
-        }
-
-        private fun convertToPhotos(epicData: EpicData): MutableList<Photos> {
-            val year = epicData.first().date.substring(0, 4)
-            val month = epicData.first().date.substring(5, 7)
-            val day = epicData.first().date.substring(8, 10)
-            val mutableList = mutableListOf<Photos>()
-            epicData.forEach {
-                mutableList.add(
-                    Photos(
-                        image = "https://epic.gsfc.nasa.gov/archive/natural/$year/$month/$day/png/${it.image}.png",
-                        description = it.caption,
-                        date = it.date
-                    )
+        val helper = ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val list = adapter.currentList.toMutableList()
+                list.removeAt(viewHolder.adapterPosition).also {
+                    list.add(target.adapterPosition, it)
+                }
+                recyclerView.adapter?.notifyItemMoved(
+                    viewHolder.adapterPosition,
+                    target.adapterPosition
                 )
+                adapter.submitList(list)
+                return true
             }
-            return mutableList
-        }
 
-        override fun onDestroyView() {
-            super.onDestroyView()
-            _binding = null
-        }
-
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            }
+        })
+        helper.attachToRecyclerView(binding.earthRV)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+}

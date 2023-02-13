@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.dk.nasa.databinding.FragmentMarsBinding
-import com.dk.nasa.model.marsRover.MarsData
 import com.dk.nasa.model.photos.Photos
 import com.dk.nasa.ui.solar.fragments.viewModels.MarsViewModel
 
@@ -41,7 +42,7 @@ class MarsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var i = 0
         viewModel.getLiveData().observe(viewLifecycleOwner) {
-            if (it.photos.isEmpty()){
+            if (it.isEmpty()){
                 viewModel.setDate(i.toLong())
                 i++
                 viewModel.sendRequest()
@@ -51,26 +52,33 @@ class MarsFragment : Fragment() {
         }
     }
 
-    private fun renderData(marsData: MarsData) {
+    private fun renderData(marsData: MutableList<Photos>) {
 
-        val list = convertToPhotos(marsData)
-        adapter.submitList(list)
+        adapter.submitList(marsData)
         binding.marsRV.adapter = adapter
+
+        val helper = ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val list = adapter.currentList.toMutableList()
+                list.removeAt(viewHolder.adapterPosition).also {
+                    list.add(target.adapterPosition,it)
+                }
+                recyclerView.adapter?.notifyItemMoved(viewHolder.adapterPosition,target.adapterPosition)
+                adapter.submitList(list)
+                return true
+            }
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            }
+        })
+        helper.attachToRecyclerView(binding.marsRV)
     }
 
-    private fun convertToPhotos(marsData: MarsData): MutableList<Photos> {
-        val mutableList = mutableListOf<Photos>()
-        marsData.photos.forEach {
-            mutableList.add(
-                Photos(
-                    image = it.img_src,
-                    description = it.camera.full_name,
-                    date = it.earth_date
-                )
-            )
-        }
-        return mutableList
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
