@@ -27,7 +27,6 @@ class MarsViewModel(
 
     fun setDate(days: Long) {
         date = LocalDate.now().minusDays(days).toString()
-        println(date)
     }
 
     fun getLiveData() = liveData

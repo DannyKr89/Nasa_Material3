@@ -1,6 +1,7 @@
 package com.dk.nasa.ui.solar.fragments
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,11 +21,22 @@ class SolarAdapter(): ListAdapter<Photos, SolarAdapter.SolarViewHolder>(SolarPho
         holder.bind(getItem(position))
     }
 
-    inner class SolarViewHolder(val binding: ItemPhotoBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class SolarViewHolder(private val binding: ItemPhotoBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(photos: Photos) {
-            with(binding){
+            with(binding) {
+                if (photos.hide){
+                    description.visibility = View.GONE
+                    date.visibility = View.GONE
+                } else {
+                    description.visibility = View.VISIBLE
+                    date.visibility = View.VISIBLE
+                }
                 image.load(photos.image)
+                image.setOnClickListener {
+                    photos.hide = !photos.hide
+                    notifyItemChanged(layoutPosition)
+                }
                 description.text = photos.description
                 date.text = photos.date
             }

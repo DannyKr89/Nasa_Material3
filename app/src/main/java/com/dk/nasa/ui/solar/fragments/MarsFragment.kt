@@ -55,7 +55,6 @@ class MarsFragment : Fragment() {
 
         val list = convertToPhotos(marsData)
         adapter.submitList(list)
-        println(list)
         binding.marsRV.adapter = adapter
     }
 
