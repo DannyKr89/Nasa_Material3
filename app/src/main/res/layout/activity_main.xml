@@ -12,7 +12,6 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/navView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,17 +21,17 @@
         tools:context=".presentation.MainActivity" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        style="@style/Widget.Material3.BottomNavigationView"
         android:id="@+id/navView"
-        app:itemTextColor="?navTextColor"
-        app:itemIconTint="?bottomSheetColor"
-        app:itemHorizontalTranslationEnabled="true"
-        app:labelVisibilityMode="selected"
+        style="@style/Widget.Material3.BottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        app:menu="@menu/nav_menu"
+        app:itemHorizontalTranslationEnabled="true"
+        app:itemIconTint="?bottomSheetColor"
+        app:itemTextColor="?navTextColor"
+        app:labelVisibilityMode="selected"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:menu="@menu/nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

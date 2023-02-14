@@ -91,9 +91,8 @@ class MainFragment : Fragment() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
             }
 
-            @RequiresApi(Build.VERSION_CODES.Q)
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                binding.pictureOfTheDay.transitionAlpha = 1 - slideOffset
+                binding.pictureOfTheDay.alpha = 1 - slideOffset / 2
             }
 
         })
@@ -161,10 +160,16 @@ class MainFragment : Fragment() {
                 TransitionManager.beginDelayedTransition(root, changeBounds)
                 setHD(b, pictureOfTheDayData)
             }
-            pictureOfTheDay.load(pictureOfTheDayData.url)
+            loadImage(pictureOfTheDayData.url)
             bottomSheet.bottomSheetDescriptionHeader.text = pictureOfTheDayData.title
             bottomSheet.bottomSheetDescription.text = pictureOfTheDayData.explanation
 
+        }
+    }
+
+    private fun loadImage(image: String) {
+        binding.pictureOfTheDay.load(image) {
+            crossfade(true)
         }
     }
 
@@ -180,7 +185,7 @@ class MainFragment : Fragment() {
                     startDelay = 200
                     start()
                 }
-                pictureOfTheDay.load(pictureOfTheDayData.hdurl)
+                loadImage(pictureOfTheDayData.hdurl)
             }
 
         } else {
@@ -192,7 +197,7 @@ class MainFragment : Fragment() {
                     startDelay = 200
                     start()
                 }
-                pictureOfTheDay.load(pictureOfTheDayData.url)
+                loadImage(pictureOfTheDayData.url)
             }
         }
         binding.chipHD.layoutParams = params

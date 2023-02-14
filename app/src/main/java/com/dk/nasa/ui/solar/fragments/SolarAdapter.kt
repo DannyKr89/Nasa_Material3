@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.dk.nasa.databinding.ItemPhotoBinding
 import com.dk.nasa.model.photos.Photos
 
-class SolarAdapter(): ListAdapter<Photos, SolarAdapter.SolarViewHolder>(SolarPhotosCallback()) {
+class SolarAdapter() : ListAdapter<Photos, SolarAdapter.SolarViewHolder>(SolarPhotosCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SolarViewHolder {
         val binding =
@@ -21,18 +22,22 @@ class SolarAdapter(): ListAdapter<Photos, SolarAdapter.SolarViewHolder>(SolarPho
         holder.bind(getItem(position))
     }
 
-    inner class SolarViewHolder(private val binding: ItemPhotoBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class SolarViewHolder(private val binding: ItemPhotoBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(photos: Photos) {
             with(binding) {
-                if (photos.hide){
+                if (photos.hide) {
                     description.visibility = View.GONE
                     date.visibility = View.GONE
                 } else {
                     description.visibility = View.VISIBLE
                     date.visibility = View.VISIBLE
                 }
-                image.load(photos.image)
+                image.load(photos.image) {
+                    crossfade(true)
+                    transformations(RoundedCornersTransformation(25f))
+                }
                 image.setOnClickListener {
                     photos.hide = !photos.hide
                     notifyItemChanged(layoutPosition)

@@ -23,7 +23,7 @@ class EarthViewModel(
     fun getLiveData() = liveData
 
     fun swapItems(oldPosition: Int, newPosition: Int) {
-        Collections.swap(liveData.value!!,oldPosition,newPosition)
+        Collections.swap(liveData.value!!, oldPosition, newPosition)
     }
 
     fun sendRequest() {

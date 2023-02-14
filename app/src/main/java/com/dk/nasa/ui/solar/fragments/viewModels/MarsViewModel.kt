@@ -22,17 +22,18 @@ class MarsViewModel(
 ) : ViewModel() {
 
     private var date: String
+    private var i = 1
 
     init {
         date = LocalDate.now().toString()
     }
 
-    fun setDate(days: Long) {
+    private fun setDate(days: Long) {
         date = LocalDate.now().minusDays(days).toString()
     }
 
-    fun swapItems(oldPOosition: Int, newPosition: Int) {
-        Collections.swap(liveData.value!!,oldPOosition,newPosition)
+    fun swapItems(oldPosition: Int, newPosition: Int) {
+        Collections.swap(liveData.value!!, oldPosition, newPosition)
     }
 
     fun getLiveData() = liveData
@@ -45,9 +46,14 @@ class MarsViewModel(
                     call: Call<MarsData>, response: Response<MarsData>
                 ) {
                     val marsData = response.body()
-                    if (response.isSuccessful && marsData != null) {
+                    if (response.isSuccessful && marsData?.photos!!.isNotEmpty()) {
                         val list = convertToPhotos(marsData)
                         liveData.postValue(list)
+
+                    } else {
+                        setDate(i.toLong())
+                        i++
+                        sendRequest()
                     }
 
                 }
@@ -56,6 +62,7 @@ class MarsViewModel(
                 }
             })
     }
+
     private fun convertToPhotos(marsData: MarsData): MutableList<Photos> {
         val mutableList = mutableListOf<Photos>()
         marsData.photos.forEach {
