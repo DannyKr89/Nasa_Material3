@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dk.nasa.databinding.FragmentEarthBinding
 import com.dk.nasa.model.photos.Photos
 import com.dk.nasa.ui.solar.fragments.viewModels.EarthViewModel
-import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 class EarthFragment : Fragment() {
@@ -46,8 +45,8 @@ class EarthFragment : Fragment() {
         }
     }
 
-    private fun renderData(marsData: MutableList<Photos>) {
-        adapter.submitList(marsData)
+    private fun renderData(epicData: MutableList<Photos>) {
+        adapter.submitList(epicData)
         binding.earthRV.adapter = adapter
         val helper = ItemTouchHelper(object :
             ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
@@ -56,8 +55,15 @@ class EarthFragment : Fragment() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                viewModel.swapItems(viewHolder.adapterPosition, target.adapterPosition)
-                adapter.notifyItemMoved(viewHolder.adapterPosition,target.adapterPosition)
+                val list = adapter.currentList.toMutableList()
+                list.removeAt(viewHolder.adapterPosition).also {
+                    list.add(target.adapterPosition, it)
+                }
+                recyclerView.adapter?.notifyItemMoved(
+                    viewHolder.adapterPosition,
+                    target.adapterPosition
+                )
+                adapter.submitList(list)
                 return true
             }
 

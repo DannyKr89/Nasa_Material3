@@ -64,8 +64,12 @@ class MarsFragment : Fragment() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                viewModel.swapItems(viewHolder.adapterPosition, target.adapterPosition)
-                adapter.notifyItemMoved(viewHolder.adapterPosition,target.adapterPosition)
+                val list = adapter.currentList.toMutableList()
+                list.removeAt(viewHolder.adapterPosition).also {
+                    list.add(target.adapterPosition,it)
+                }
+                recyclerView.adapter?.notifyItemMoved(viewHolder.adapterPosition,target.adapterPosition)
+                adapter.submitList(list)
                 return true
             }
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
