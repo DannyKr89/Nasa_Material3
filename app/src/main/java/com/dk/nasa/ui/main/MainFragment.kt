@@ -5,12 +5,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.transition.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -162,7 +166,29 @@ class MainFragment : Fragment() {
             }
             loadImage(pictureOfTheDayData.url)
             bottomSheet.bottomSheetDescriptionHeader.text = pictureOfTheDayData.title
-            bottomSheet.bottomSheetDescription.text = pictureOfTheDayData.explanation
+            var spannableString = SpannableString(pictureOfTheDayData.explanation)
+            bottomSheet.bottomSheetDescription.setText(
+                spannableString,
+                TextView.BufferType.SPANNABLE
+            )
+            spannableString = bottomSheet.bottomSheetDescription.text as SpannableString
+            for (i in spannableString.indices) {
+                if (spannableString[i] == 'e' || spannableString[i] == 'E') {
+                    if (i != spannableString.lastIndex)
+                        spannableString.setSpan(
+                            ForegroundColorSpan(requireContext().getColor(R.color.white)),
+                            i,
+                            i + 1,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    else
+                        spannableString.setSpan(
+                            ForegroundColorSpan(requireContext().getColor(R.color.white)),
+                            i,
+                            spannableString.length,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
+
+            }
 
         }
     }
