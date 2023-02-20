@@ -23,6 +23,7 @@
             android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/sofia"
             android:paddingHorizontal="8dp"
             android:textAlignment="textStart"
             android:textStyle="bold"

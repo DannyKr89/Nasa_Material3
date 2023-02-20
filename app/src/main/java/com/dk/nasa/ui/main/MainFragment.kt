@@ -5,12 +5,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.transition.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -162,7 +166,36 @@ class MainFragment : Fragment() {
             }
             loadImage(pictureOfTheDayData.url)
             bottomSheet.bottomSheetDescriptionHeader.text = pictureOfTheDayData.title
-            bottomSheet.bottomSheetDescription.text = pictureOfTheDayData.explanation
+            var spannableString = SpannableString(pictureOfTheDayData.explanation)
+            val colors = arrayOf(
+                R.color.red,
+                R.color.orange,
+                R.color.yellow,
+                R.color.green,
+                R.color.lightblue,
+                R.color.blue,
+                R.color.violet,
+            )
+            bottomSheet.bottomSheetDescription.setText(
+                spannableString,
+                TextView.BufferType.SPANNABLE
+            )
+            spannableString = bottomSheet.bottomSheetDescription.text as SpannableString
+            var firstSpace = 0
+            var lastSpace: Int
+            for (i in spannableString.indices) {
+                if (spannableString[i] == ' ') {
+                    lastSpace = i
+                    spannableString.setSpan(
+                        ForegroundColorSpan(requireContext().getColor(colors.random())),
+                        firstSpace,
+                        lastSpace,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    firstSpace = i
+                }
+
+            }
 
         }
     }
