@@ -5,8 +5,8 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dk.nasa.BuildConfig
-import com.dk.nasa.model.PictureOfTheDayData
-import com.dk.nasa.model.RepositoryImpl
+import com.dk.nasa.model.pictureOfTheDay.PictureOfTheDayData
+import com.dk.nasa.model.pictureOfTheDay.RepositoryImpl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

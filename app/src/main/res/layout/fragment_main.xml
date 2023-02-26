@@ -12,8 +12,8 @@
         tools:context=".ui.main.MainFragment">
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:id="@+id/inputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/search_wiki"
@@ -37,34 +37,34 @@
             android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:singleSelection="true"
+            app:flow_horizontalAlign="center"
             android:padding="8dp"
             app:checkedChip="@id/chipToday"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/inputLayout">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inputLayout"
+            app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipToday"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
+                style="@style/MyChips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/today"
-                />
+                android:text="@string/today" />
+
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipYesterday"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
+                style="@style/MyChips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/yesterday"
-                />
+                android:text="@string/yesterday" />
+
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipAfterYesterday"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
+                style="@style/MyChips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/after_yesterday"
-                />
+                android:text="@string/after_yesterday" />
 
         </com.google.android.material.chip.ChipGroup>
 
@@ -77,28 +77,28 @@
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/chipGroup"
-            />
+            app:layout_constraintTop_toBottomOf="@id/chipGroup" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipHD"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            style="@style/Widget.Material3.Chip.Suggestion.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HD"
-            app:layout_constraintEnd_toEndOf="@id/pictureOfTheDay"
-            app:layout_constraintBottom_toBottomOf="@id/pictureOfTheDay"/>
+            android:layout_margin="4dp"
+            android:text="@string/hd"
+            app:layout_constraintBottom_toBottomOf="@id/pictureOfTheDay"
+            app:layout_constraintEnd_toEndOf="@id/pictureOfTheDay" />
 
         <ProgressBar
             android:id="@+id/progressbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:visibility="gone"
             android:padding="16dp"
-            app:layout_constraintStart_toEndOf="parent"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/inputLayout"/>
+            app:layout_constraintBottom_toBottomOf="@id/pictureOfTheDay"
+            app:layout_constraintTop_toTopOf="@id/pictureOfTheDay" />
 
         <TextView
             android:id="@+id/title"
@@ -121,7 +121,6 @@
     <include
         android:id="@+id/bottomSheet"
         layout="@layout/bottom_sheet" />
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,4 +1,4 @@
-package com.dk.nasa.model
+package com.dk.nasa.model.pictureOfTheDay
 
 import retrofit2.Call
 import retrofit2.http.GET

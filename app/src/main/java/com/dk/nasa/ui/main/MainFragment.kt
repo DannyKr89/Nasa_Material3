@@ -14,18 +14,15 @@ import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.dk.nasa.R
 import com.dk.nasa.databinding.FragmentMainBinding
-import com.dk.nasa.model.PictureOfTheDayData
+import com.dk.nasa.model.pictureOfTheDay.PictureOfTheDayData
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MainFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
 
     private val viewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
+        ViewModelProvider(this)[MainViewModel::class.java]
     }
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -68,12 +65,13 @@ class MainFragment : Fragment() {
         viewModel.getLiveData().observe(viewLifecycleOwner) { appState ->
             when (appState) {
                 is AppState.Error -> {
-
+                    hideProgressbar()
                 }
                 AppState.Loading -> {
-
+                    showProgressbar()
                 }
                 is AppState.Success -> {
+                    hideProgressbar()
                     renderData(appState.pictureOfTheDayData)
                 }
             }
@@ -87,6 +85,18 @@ class MainFragment : Fragment() {
         }
 
         setBottomSheetBehavior(binding.bottomSheet.bottomSheetContainer)
+    }
+
+    private fun showProgressbar() {
+        with(binding) {
+            progressbar.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideProgressbar() {
+        with(binding) {
+            progressbar.visibility = View.GONE
+        }
     }
 
     private fun renderData(pictureOfTheDayData: PictureOfTheDayData) {

@@ -1,4 +1,4 @@
-package com.dk.nasa.model
+package com.dk.nasa.model.pictureOfTheDay
 
 
 import com.google.gson.annotations.SerializedName

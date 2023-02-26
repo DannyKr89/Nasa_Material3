@@ -9,4 +9,15 @@
     <string name="today">Сегодня</string>
     <string name="yesterday">Вчера</string>
     <string name="after_yesterday">Позавчера</string>
+    <string name="hd">HD</string>
+    <string name="defaultTheme">Default</string>
+    <string name="red">Red</string>
+    <string name="yellow">Yellow</string>
+    <string name="btn_apply">Применить</string>
+    <string name="theme">Тема</string>
+
+    <string name="solar_system">Solar system</string>
+    <string name="earth">Земля</string>
+    <string name="mars">Марс</string>
+    <string name="weather">Погода</string>
 </resources>
