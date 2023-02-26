@@ -15,7 +15,6 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     lateinit var sprefs: SharedPreferences
-    var theme: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -26,16 +25,18 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sprefs = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        theme = sprefs.getInt("themes", R.style.Theme_Nasa)
-        changeRB()
+        getTheme()
 
         binding.apply.setOnClickListener {
             activity?.recreate()
         }
     }
 
-    private fun changeRB() {
+    private fun getTheme() {
+
+        sprefs = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        val theme = sprefs.getInt("themes", R.style.Theme_Nasa)
+
         binding.radioGroup.clearCheck()
         when (theme) {
             R.style.Theme_Nasa -> {
@@ -48,20 +49,25 @@ class SettingsFragment : Fragment() {
                 binding.rbYellow.isChecked = true
             }
         }
-        val editor = sprefs.edit()
+
         binding.radioGroup.setOnCheckedChangeListener { _, id ->
             when (id) {
                 R.id.rbDefault -> {
-                    editor.putInt("themes", R.style.Theme_Nasa).apply()
+                    saveTheme(R.style.Theme_Nasa)
                 }
                 R.id.rbRed -> {
-                    editor.putInt("themes", R.style.Red).apply()
+                    saveTheme(R.style.Red)
                 }
                 R.id.rbYellow -> {
-                    editor.putInt("themes", R.style.Yellow).apply()
+                    saveTheme(R.style.Yellow)
                 }
             }
         }
+    }
+
+    private fun saveTheme(theme: Int) {
+        val editor = sprefs.edit()
+        editor.putInt("themes", theme).apply()
     }
 
     override fun onDestroyView() {

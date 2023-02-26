@@ -5,15 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.main.MainFragment">
+        tools:context=".ui.main.MainFragment"
+        app:layoutDescription="@xml/fragment_main_scene">
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:id="@+id/inputLayout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/search_wiki"
@@ -29,7 +30,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputET"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:contentDescription=""
+                tools:ignore="ContentDescription,VisualLintTextFieldSize" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -37,9 +41,9 @@
             android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:flow_horizontalAlign="center"
             android:padding="8dp"
             app:checkedChip="@id/chipToday"
+            app:flow_horizontalAlign="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/inputLayout"
@@ -84,21 +88,10 @@
             style="@style/Widget.Material3.Chip.Suggestion.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
             android:text="@string/hd"
             app:layout_constraintBottom_toBottomOf="@id/pictureOfTheDay"
             app:layout_constraintEnd_toEndOf="@id/pictureOfTheDay" />
 
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/pictureOfTheDay"
-            app:layout_constraintTop_toTopOf="@id/pictureOfTheDay" />
 
         <TextView
             android:id="@+id/title"
@@ -116,7 +109,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
     <include
         android:id="@+id/bottomSheet"

@@ -19,10 +19,15 @@ class MarsViewModel(
     private val repositoryImpl: MarsRepositoryImpl = MarsRepositoryImpl()
 ) : ViewModel() {
 
-    var date: String
+    private var date: String
 
     init {
-        date = LocalDate.now().minusDays(1).toString()
+        date = LocalDate.now().toString()
+    }
+
+    fun setDate(days: Long) {
+        date = LocalDate.now().minusDays(days).toString()
+        println(date)
     }
 
     fun getLiveData() = liveData

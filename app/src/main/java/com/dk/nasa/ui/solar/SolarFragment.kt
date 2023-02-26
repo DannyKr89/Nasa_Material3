@@ -1,10 +1,10 @@
 package com.dk.nasa.ui.solar
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.dk.nasa.R
 import com.dk.nasa.databinding.FragmentSolarBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -28,21 +28,23 @@ class SolarFragment : Fragment() {
     }
 
     private fun init() {
-        with(binding){
+        with(binding) {
             vpSolar.adapter = VPAdapter(this@SolarFragment.requireActivity())
-            TabLayoutMediator(tlSolar,vpSolar) { tab, position ->
+            TabLayoutMediator(tlSolar, vpSolar) { tab, position ->
                 vpSolar.setCurrentItem(tab.position, true)
-                tab.text = when(position){
-                    0 ->{
-                         getString(R.string.earth)
+                tab.text = when (position) {
+                    0 -> {
+                        getString(R.string.earth)
                     }
-                    1 ->{
+                    1 -> {
                         getString(R.string.mars)
                     }
-                    2 ->{
+                    2 -> {
                         getString(R.string.weather)
                     }
-                    else -> {""}
+                    else -> {
+                        ""
+                    }
                 }
             }.attach()
         }
