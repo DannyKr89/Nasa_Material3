@@ -1,7 +1,8 @@
 package com.dk.nasa.model.photos
 
-data class Photos (
+data class Photos(
     val image: String,
     val description: String,
-    val date: String
+    val date: String,
+    var hide: Boolean = true
 )
