@@ -11,18 +11,6 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="MyShapeAppearance" parent="ShapeAppearance.Material3.SmallComponent">
-        <item name="cornerFamily">cut</item>
-        <item name="cornerSize">50%</item>
-    </style>
-
-    <style name="MyTextAppearance" parent="TextAppearance.Material3.LabelLarge">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">10sp</item>
-        <item name="android:letterSpacing">0.5</item>
-        <item name="android:textAllCaps">true</item>
-
-    </style>
 
     <style name="Red" parent="Theme.Nasa">
         <item name="colorPrimary">#EE0000</item>
@@ -40,14 +28,8 @@
         <item name="navTextColor">#EEBA00</item>
     </style>
 
-
-    <style name="MyChips" parent="Widget.Material3.Chip.Suggestion">
-        <item name="android:textAppearance">@style/MyTextAppearance</item>
-        <item name="shapeAppearance">@style/MyShapeAppearance</item>
-    </style>
-
-    <style name="MyBottomSheet" parent="Widget.Material3.BottomSheet">
-        <item name="backgroundTint">?bottomSheetColor</item>
+    <style name="SplashScreen" parent="Theme.Nasa">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
 </resources>
